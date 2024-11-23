@@ -105,8 +105,20 @@ def main():
     elif random_color == pale_tea:
         display.draw_bitmap(70, 70, "/assets/pale_tea_100x100.bmp")
     else:
-        display.draw_bitmap(70, 70, "/assets/revolver_100x100.bmp")  
-    time.sleep(120)
+        display.draw_bitmap(70, 70, "/assets/revolver_100x100.bmp")
+
+    reboot_time = 0
+    while reboot_time <= 120:
+        cpu_freq = microcontroller.cpu.frequency
+        cpu_temp = microcontroller.cpu.temperature
+        display.draw_text("freq_text", 100, 120, cpu_freq, text_color, terminalio.FONT)
+        display.draw_text("temp_text", 120, 120, cpu_temp, text_color, terminalio.FONT)
+        time.sleep(1)
+        display.remove_text("freq_text")
+        display.remove_text("temp_text")
+        reboot_time += 1
+
+
 
     display.clear_screen()
     display.shutdown()
