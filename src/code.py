@@ -99,13 +99,13 @@ def main():
     time.sleep(1)
 
     if random_color == seafoam_color:
-        display.draw_bitmap(70, 40, "/assets/kraken_blue.bmp")
+        display.draw_bitmap(70, 30, "/assets/kraken_blue.bmp")
     elif random_color == ubuntu_orange:
-        display.draw_bitmap(70, 40, "/assets/kraken_ubuntu.bmp")
+        display.draw_bitmap(70, 30, "/assets/kraken_ubuntu.bmp")
     elif random_color == pale_tea:
-        display.draw_bitmap(70, 40, "/assets/pale_tea_100x100.bmp")
+        display.draw_bitmap(70, 30, "/assets/pale_tea_100x100.bmp")
     else:
-        display.draw_bitmap(70, 40, "/assets/revolver_100x100.bmp")
+        display.draw_bitmap(70, 30, "/assets/revolver_100x100.bmp")
 
     reboot_time = 0
 
