@@ -117,8 +117,8 @@ def main():
         freq_text = f"Freq: {cpu_freq:.2f} MHz"
         temp_text = f"Temp: {cpu_temp:.2f} °C"
 
-        display.draw_text("freq_text", 100, 120, freq_text, text_color, terminalio.FONT)
-        display.draw_text("temp_text", 100, 140, temp_text, text_color, terminalio.FONT)
+        display.draw_text("freq_text", 70, 180, freq_text, text_color, terminalio.FONT)
+        display.draw_text("temp_text", 70, 200, temp_text, text_color, terminalio.FONT)
 
         time.sleep(1)
 
