@@ -99,31 +99,38 @@ def main():
     time.sleep(1)
 
     if random_color == seafoam_color:
-        display.draw_bitmap(70, 50, "/assets/kraken_blue.bmp")
+        display.draw_bitmap(70, 40, "/assets/kraken_blue.bmp")
     elif random_color == ubuntu_orange:
-        display.draw_bitmap(70, 70, "/assets/kraken_ubuntu.bmp")
+        display.draw_bitmap(70, 40, "/assets/kraken_ubuntu.bmp")
     elif random_color == pale_tea:
-        display.draw_bitmap(70, 70, "/assets/pale_tea_100x100.bmp")
+        display.draw_bitmap(70, 40, "/assets/pale_tea_100x100.bmp")
     else:
-        display.draw_bitmap(70, 70, "/assets/revolver_100x100.bmp")
+        display.draw_bitmap(70, 40, "/assets/revolver_100x100.bmp")
 
     reboot_time = 0
-    text_color = 0x000000  # Black text color
 
     while reboot_time <= 120:
-        cpu_freq = microcontroller.cpu.frequency / 1_000_000  # Convert to MHz
-        cpu_temp = microcontroller.cpu.temperature
+        cpu_freq0 = microcontroller.cpus[0].frequency / 1_000_000
+        cpu_temp0 = microcontroller.cpus[0].temperature
+        cpu_freq1 = microcontroller.cpus[1].frequency / 1_000_000
+        cpu_temp1 = microcontroller.cpus[1].temperature
 
-        freq_text = f"Freq: {cpu_freq:.2f} MHz"
-        temp_text = f"Temp: {cpu_temp:.2f} °C"
+        freq_text0 = f"CPU0: {cpu_freq0:.2f} MHz"
+        temp_text0 = f"Temp0: {cpu_temp0:.2f} °C"
+        freq_text1 = f"CPU1: {cpu_freq1:.2f} MHz"
+        temp_text1 = f"Temp1: {cpu_temp1:.2f} °C"
 
-        display.draw_text("freq_text", 70, 180, freq_text, text_color, terminalio.FONT)
-        display.draw_text("temp_text", 70, 200, temp_text, text_color, terminalio.FONT)
+        display.draw_text("freq_text0", 70, 140, freq_text0, text_color, terminalio.FONT)
+        display.draw_text("temp_text0", 70, 160, temp_text0, text_color, terminalio.FONT)
+        display.draw_text("freq_text1", 70, 180, freq_text1, text_color, terminalio.FONT)
+        display.draw_text("temp_text1", 70, 200, temp_text1, text_color, terminalio.FONT)
 
         time.sleep(1)
 
-        display.remove_text("freq_text")
-        display.remove_text("temp_text")
+        display.remove_text("freq_text0")
+        display.remove_text("temp_text0")
+        display.remove_text("freq_text1")
+        display.remove_text("temp_text1")
 
         reboot_time += 1
 
