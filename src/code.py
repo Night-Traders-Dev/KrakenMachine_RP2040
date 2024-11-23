@@ -66,20 +66,24 @@ class GC9A01_Display:
 
 def main():
     display = GC9A01_Display()
-
+    
+    aubergine_text = 0x77216F
+    text_color = 0x000000
     seafoam_color = 0x93E9BE
     ubuntu_orange = 0xE95420
     random_color = random.choice([seafoam_color, ubuntu_orange])
     display.fill_background(random_color)
+    if random_color == ubuntu_orange:
+        text_color = aubergine_text
 
-    display.draw_text("kraken_text", 80, 120, "Kraken Machine", 0x000000, terminalio.FONT)
+    display.draw_text("kraken_text", 80, 120, "Kraken Machine", text_color, terminalio.FONT)
     time.sleep(2)
 
     display.remove_text("kraken_text")
     time.sleep(1)
 
-    display.draw_text("os_text", 90, 100, "vOS RP2040", 0x000000, terminalio.FONT)    
-    display.draw_text("ver_text", 80, 120, "Version 0.0.1", 0x000000, terminalio.FONT)
+    display.draw_text("os_text", 90, 100, "vOS RP2040", text_color, terminalio.FONT)    
+    display.draw_text("ver_text", 80, 120, "Version 0.0.1", text_color, terminalio.FONT)
     time.sleep(2)
 
     display.remove_text("os_text")
@@ -97,3 +101,4 @@ def main():
 
 
 main()
+
