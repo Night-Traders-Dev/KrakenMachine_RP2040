@@ -68,13 +68,19 @@ def main():
     display = GC9A01_Display()
     
     aubergine_text = 0x77216F
+    text_white = 0xffffff
     text_color = 0x000000
     seafoam_color = 0x93E9BE
     ubuntu_orange = 0xE95420
-    random_color = random.choice([seafoam_color, ubuntu_orange])
+    revolver_purple = 0x402141
+    random_color = random.choice([seafoam_color, ubuntu_orange, revolver_purple])
     display.fill_background(random_color)
     if random_color == ubuntu_orange:
         text_color = aubergine_text
+    elif random_color == revolver_purple:
+        text_color = text_white
+    else:
+        text_color = text_color
 
     display.draw_text("kraken_text", 80, 120, "Kraken Machine", text_color, terminalio.FONT)
     time.sleep(2)
@@ -92,8 +98,10 @@ def main():
 
     if random_color == seafoam_color:
         display.draw_bitmap(70, 50, "/assets/kraken_blue.bmp")
+    elif random_color == ubuntu_orange:
+        display.draw_bitmap(70, 70, "/assets/kraken_ubuntu.bmp")
     else:
-        display.draw_bitmap(70, 70, "/assets/kraken_ubuntu.bmp")  
+        display.draw_bitmap(70, 70, "/assets/revolver_100x100.bmp")  
     time.sleep(120)
 
     display.clear_screen()
@@ -101,4 +109,5 @@ def main():
 
 
 main()
+
 
