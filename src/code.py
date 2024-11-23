@@ -108,14 +108,23 @@ def main():
         display.draw_bitmap(70, 70, "/assets/revolver_100x100.bmp")
 
     reboot_time = 0
+    text_color = 0x000000  # Black text color
+
     while reboot_time <= 120:
-        cpu_freq = microcontroller.cpu.frequency
+        cpu_freq = microcontroller.cpu.frequency / 1_000_000  # Convert to MHz
         cpu_temp = microcontroller.cpu.temperature
-        display.draw_text("freq_text", 100, 120, cpu_freq, text_color, terminalio.FONT)
-        display.draw_text("temp_text", 120, 120, cpu_temp, text_color, terminalio.FONT)
+
+        freq_text = f"Freq: {cpu_freq:.2f} MHz"
+        temp_text = f"Temp: {cpu_temp:.2f} °C"
+
+        display.draw_text("freq_text", 100, 120, freq_text, text_color, terminalio.FONT)
+        display.draw_text("temp_text", 100, 140, temp_text, text_color, terminalio.FONT)
+
         time.sleep(1)
+
         display.remove_text("freq_text")
         display.remove_text("temp_text")
+
         reboot_time += 1
 
 
