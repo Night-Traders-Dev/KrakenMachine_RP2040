@@ -131,6 +131,10 @@ def main():
     revolver_purple = 0x402141
     pale_tea = 0xc1eabe
 
+    start_time = time.monotonic()
+    uptime = 0
+
+
     random_color = random.choice([seafoam_color, ubuntu_orange, revolver_purple, pale_tea])
     display.fill_background(random_color)
     if random_color == ubuntu_orange:
@@ -140,19 +144,27 @@ def main():
     else:
         text_color = text_color
 
-    display.draw_text("kraken_text", 80, 120, "Kraken Machine", text_color, terminalio.FONT)
+    display.draw_text("boot_text", 50, 60, "Booting...", text_color, terminalio.FONT)
+    display.draw_text("cpu_text", 50, 80, "Dual-core Arm Cortex-M0+", text_color, terminalio.FONT)
+    display.draw_text("mem_text", 50, 100, "264kB on-chip SRAM", text_color, terminalio.FONT)
+    time.sleep(3)
+
+
+    display.remove_text("boot_text")
+    display.remove_text("cpu_text")
+    display.remove_text("mem_text")
+    time.sleep(1)
+
+    display.draw_text("kraken_text", 60, 60, "Kraken Machine", text_color, terminalio.FONT)
+    time.sleep(1)
+
+    display.draw_text("os_text", 60, 80, "vOS RP2040", text_color, terminalio.FONT)    
+    display.draw_text("ver_text", 60, 100, "Version 0.0.1", text_color, terminalio.FONT)
     time.sleep(2)
 
     display.remove_text("kraken_text")
-    time.sleep(1)
-
-    display.draw_text("os_text", 90, 100, "vOS RP2040", text_color, terminalio.FONT)    
-    display.draw_text("ver_text", 80, 120, "Version 0.0.1", text_color, terminalio.FONT)
-    time.sleep(2)
-
     display.remove_text("os_text")
     display.remove_text("ver_text")
-    time.sleep(1)
 
 
     if random_color == seafoam_color:
@@ -179,6 +191,13 @@ def main():
     reboot_time = 0
 
     while reboot_time <= 600:
+        uptime = time.monotonic() - start_time  # Elapsed time since start
+        hours = int(uptime // 3600)
+        minutes = int((uptime % 3600) // 60)
+        seconds = int(uptime % 60)
+    
+        # Format uptime string
+        uptime_text = f"Uptime: {hours:02}:{minutes:02}:{seconds:02}"
         cpu_freq0 = microcontroller.cpus[0].frequency / 1_000_000
         cpu_temp0 = microcontroller.cpus[0].temperature
         cpu_freq1 = microcontroller.cpus[1].frequency / 1_000_000
@@ -193,6 +212,7 @@ def main():
         display.draw_text("temp_text0", 70, 160, temp_text0, text_color, terminalio.FONT)
         display.draw_text("freq_text1", 70, 180, freq_text1, text_color, terminalio.FONT)
         display.draw_text("temp_text1", 70, 200, temp_text1, text_color, terminalio.FONT)
+        display.draw_text("uptime_text", 70, 220, uptime_text, text_color, terminalio.FONT)
 
         time.sleep(1)
 
@@ -200,6 +220,7 @@ def main():
         display.remove_text("temp_text0")
         display.remove_text("freq_text1")
         display.remove_text("temp_text1")
+        display.remove_text("uptime_text")
 
         reboot_time += 1
 
