@@ -28,6 +28,7 @@ class GC9A01_Display:
         self.display.root_group = self.root_group
         self.text_elements = {}
 
+
     def fill_background(self, color):
         bg_bitmap = displayio.Bitmap(240, 240, 1)
         bg_palette = displayio.Palette(1)
