@@ -1,5 +1,7 @@
 import time
 import random
+import math
+
 import board
 import busio
 import displayio
@@ -43,6 +45,60 @@ class GC9A01_Display:
         text_area.y = y
         self.root_group.append(text_area)
         self.text_elements[id] = text_area
+
+    def draw_curved_text(self, id, center_x, center_y, radius, text, color, font, start_angle=90, total_angle=180):
+        """
+        Draw text along a curved path with rotated letters.
+
+        Args:
+            id: Identifier for the text group.
+            center_x, center_y: Center of the curve.
+            radius: Radius of the curve.
+            text: The string to display.
+            color: Color of the text.
+            font: Font used for the text.
+            start_angle: Starting angle in degrees (default is 90 for top-left).
+            total_angle: Total angular span for the text in degrees.
+        """
+        group = displayio.Group()
+    
+        # Calculate angular spacing based on total_angle and text length
+        num_chars = len(text)
+        angular_spacing = math.radians(total_angle / (num_chars - 1))
+    
+        # Start angle in radians
+        angle = math.radians(start_angle)
+
+        for char in text:
+            # Create a label for each character
+            char_label = label.Label(font, text=char, color=color)
+        
+            # Calculate character position
+            char_x = center_x + radius * math.cos(angle)
+            char_y = center_y - radius * math.sin(angle)
+        
+            # Calculate rotation angle (tangent to curve)
+            rotation_angle = math.degrees(angle) - 90  # Adjust for readability
+        
+            # Set position and anchor
+            char_label.x = int(char_x)
+            char_label.y = int(char_y)
+            char_label.anchor_point = (0.5, 0.5)
+            char_label.anchored_position = (char_label.x, char_label.y)
+        
+            # Apply rotation
+            char_label.rotation = rotation_angle  # Rotates the character
+        
+            # Add to group
+            group.append(char_label)
+        
+            # Increment angle for next character
+            angle += angular_spacing
+
+        # Add to root group
+        self.root_group.append(group)
+        self.text_elements[id] = group
+
 
     def remove_text(self, id):
         if id in self.text_elements:
@@ -97,6 +153,19 @@ def main():
     display.remove_text("os_text")
     display.remove_text("ver_text")
     time.sleep(1)
+
+    display.draw_curved_text(
+        "curved_text",
+        center_x=100,          # Shift the curve's center to the left
+        center_y=120,          # Vertically center the curve
+        radius=95,             # Adjust radius for curvature
+        text="Kraken",         # Text to display
+        color=0x000000,        # Text color
+        font=terminalio.FONT,  # Font
+        start_angle=120,       # Start at left-hand side
+        total_angle=95        # Span 120 degrees
+    )
+
 
     if random_color == seafoam_color:
         display.draw_bitmap(70, 30, "/assets/kraken_blue.bmp")
