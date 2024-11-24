@@ -154,6 +154,16 @@ def main():
     display.remove_text("ver_text")
     time.sleep(1)
 
+
+    if random_color == seafoam_color:
+        display.draw_bitmap(70, 30, "/assets/kraken_blue.bmp")
+    elif random_color == ubuntu_orange:
+        display.draw_bitmap(70, 30, "/assets/kraken_ubuntu.bmp")
+    elif random_color == pale_tea:
+        display.draw_bitmap(70, 30, "/assets/pale_tea_100x100.bmp")
+    else:
+        display.draw_bitmap(70, 30, "/assets/revolver_100x100.bmp")
+
     display.draw_curved_text(
         "curved_text",
         center_x=100,          # Shift the curve's center to the left
@@ -166,19 +176,9 @@ def main():
         total_angle=95        # Span 120 degrees
     )
 
-
-    if random_color == seafoam_color:
-        display.draw_bitmap(70, 30, "/assets/kraken_blue.bmp")
-    elif random_color == ubuntu_orange:
-        display.draw_bitmap(70, 30, "/assets/kraken_ubuntu.bmp")
-    elif random_color == pale_tea:
-        display.draw_bitmap(70, 30, "/assets/pale_tea_100x100.bmp")
-    else:
-        display.draw_bitmap(70, 30, "/assets/revolver_100x100.bmp")
-
     reboot_time = 0
 
-    while reboot_time <= 120:
+    while reboot_time <= 600:
         cpu_freq0 = microcontroller.cpus[0].frequency / 1_000_000
         cpu_temp0 = microcontroller.cpus[0].temperature
         cpu_freq1 = microcontroller.cpus[1].frequency / 1_000_000
