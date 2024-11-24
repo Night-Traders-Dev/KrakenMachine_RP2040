@@ -168,13 +168,13 @@ def main():
 
 
     if random_color == seafoam_color:
-        display.draw_bitmap(70, 30, "/assets/kraken_blue.bmp")
+        display.draw_bitmap(70, 25, "/assets/kraken_blue.bmp")
     elif random_color == ubuntu_orange:
-        display.draw_bitmap(70, 30, "/assets/kraken_ubuntu.bmp")
+        display.draw_bitmap(70, 25, "/assets/kraken_ubuntu.bmp")
     elif random_color == pale_tea:
-        display.draw_bitmap(70, 30, "/assets/pale_tea_100x100.bmp")
+        display.draw_bitmap(70, 25, "/assets/pale_tea_100x100.bmp")
     else:
-        display.draw_bitmap(70, 30, "/assets/revolver_100x100.bmp")
+        display.draw_bitmap(70, 25, "/assets/revolver_100x100.bmp")
 
     display.draw_curved_text(
         "curved_text",
@@ -190,7 +190,7 @@ def main():
 
     reboot_time = 0
 
-    while reboot_time <= 600:
+    while reboot_time <= 86400:
         uptime = time.monotonic() - start_time  # Elapsed time since start
         hours = int(uptime // 3600)
         minutes = int((uptime % 3600) // 60)
@@ -208,11 +208,11 @@ def main():
         freq_text1 = f"CPU1: {cpu_freq1:.2f} MHz"
         temp_text1 = f"Temp1: {cpu_temp1:.2f} °C"
 
-        display.draw_text("freq_text0", 70, 140, freq_text0, text_color, terminalio.FONT)
-        display.draw_text("temp_text0", 70, 160, temp_text0, text_color, terminalio.FONT)
-        display.draw_text("freq_text1", 70, 180, freq_text1, text_color, terminalio.FONT)
-        display.draw_text("temp_text1", 70, 200, temp_text1, text_color, terminalio.FONT)
-        display.draw_text("uptime_text", 70, 220, uptime_text, text_color, terminalio.FONT)
+        display.draw_text("freq_text0", 70, 130, freq_text0, text_color, terminalio.FONT)
+        display.draw_text("temp_text0", 70, 150, temp_text0, text_color, terminalio.FONT)
+        display.draw_text("freq_text1", 70, 170, freq_text1, text_color, terminalio.FONT)
+        display.draw_text("temp_text1", 70, 190, temp_text1, text_color, terminalio.FONT)
+        display.draw_text("uptime_text", 70, 210, uptime_text, text_color, terminalio.FONT)
 
         time.sleep(1)
 
