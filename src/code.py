@@ -1,9 +1,12 @@
 import time
 import random
 from km_lib.display_init import GC9A01_Display
+#from km_lib.command_proc import process_command
 import terminalio
 import microcontroller
 import gc
+
+
 
 def main():
     display = GC9A01_Display()
@@ -101,11 +104,7 @@ def main():
         cpu_temp0 = microcontroller.cpus[0].temperature
         cpu_freq1 = microcontroller.cpus[1].frequency / 1_000_000
         cpu_temp1 = microcontroller.cpus[1].temperature
-        free_memory = gc.mem_free()
-        allocated_memory = gc.mem_alloc()
-        total_memory = free_memory + allocated_memory
-        used_memory_percentage = (allocated_memory / total_memory) * 100
-
+        gc.collect()
 
         freq_text0 = f"CPU0/1: {cpu_freq0:.2f}/{cpu_freq1:.2f} MHz"
         temp_text0 = f"Temp0/1: {cpu_temp0:.2f}/{cpu_temp1:.2f} °C"
