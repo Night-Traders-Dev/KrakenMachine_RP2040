@@ -3,6 +3,7 @@ import random
 from km_lib.display_init import GC9A01_Display
 import terminalio
 import microcontroller
+import gc
 
 def main():
     display = GC9A01_Display()
@@ -25,14 +26,34 @@ def main():
     elif random_color == revolver_purple:
         text_color = text_white
 
+
+
+    free_memory = gc.mem_free()
+    allocated_memory = gc.mem_alloc()
+    total_memory = free_memory + allocated_memory
+    used_memory_percentage = (allocated_memory / total_memory) * 100
+    ram_usage = f"Used: {allocated_memory // 1024} KB"
+    ram_free = f"Free: {free_memory // 1024} KB"
+    ram_total = f"Total: {total_memory // 1024} KB"
+    ram_percent = f"Usage: {used_memory_percentage:.2f}%"
+    ram_display = f"Ram: {allocated_memory // 1024}/{total_memory // 1024} KB({used_memory_percentage:.2f})%"
+
+
+
     display.draw_text("boot_text", 50, 60, "Booting...", text_color, terminalio.FONT)
     display.draw_text("cpu_text", 50, 80, "Dual-core Arm Cortex-M0+", text_color, terminalio.FONT)
-    display.draw_text("mem_text", 50, 100, "264kB on-chip SRAM", text_color, terminalio.FONT)
+    display.draw_text("ram_usage", 50, 100, ram_usage, text_color, terminalio.FONT)
+    display.draw_text("ram_free", 50, 120, ram_free, text_color, terminalio.FONT)
+    display.draw_text("ram_total", 50, 140, ram_total, text_color, terminalio.FONT)
+    display.draw_text("ram_percent", 50, 160, ram_percent, text_color, terminalio.FONT)
     time.sleep(3)
 
     display.remove_text("boot_text")
     display.remove_text("cpu_text")
-    display.remove_text("mem_text")
+    display.remove_text("ram_usage")
+    display.remove_text("ram_free")
+    display.remove_text("ram_total")
+    display.remove_text("ram_percent")
     time.sleep(1)
 
     display.draw_text("kraken_text", 60, 60, "Kraken Machine", text_color, terminalio.FONT)
@@ -80,24 +101,25 @@ def main():
         cpu_temp0 = microcontroller.cpus[0].temperature
         cpu_freq1 = microcontroller.cpus[1].frequency / 1_000_000
         cpu_temp1 = microcontroller.cpus[1].temperature
+        free_memory = gc.mem_free()
+        allocated_memory = gc.mem_alloc()
+        total_memory = free_memory + allocated_memory
+        used_memory_percentage = (allocated_memory / total_memory) * 100
 
-        freq_text0 = f"CPU0: {cpu_freq0:.2f} MHz"
-        temp_text0 = f"Temp0: {cpu_temp0:.2f} °C"
-        freq_text1 = f"CPU1: {cpu_freq1:.2f} MHz"
-        temp_text1 = f"Temp1: {cpu_temp1:.2f} °C"
 
-        display.draw_text("freq_text0", 70, 130, freq_text0, text_color, terminalio.FONT)
-        display.draw_text("temp_text0", 70, 150, temp_text0, text_color, terminalio.FONT)
-        display.draw_text("freq_text1", 70, 170, freq_text1, text_color, terminalio.FONT)
-        display.draw_text("temp_text1", 70, 190, temp_text1, text_color, terminalio.FONT)
+        freq_text0 = f"CPU0/1: {cpu_freq0:.2f}/{cpu_freq1:.2f} MHz"
+        temp_text0 = f"Temp0/1: {cpu_temp0:.2f}/{cpu_temp1:.2f} °C"
+
+        display.draw_text("freq_text0", 50, 130, freq_text0, text_color, terminalio.FONT)
+        display.draw_text("temp_text0", 50, 150, temp_text0, text_color, terminalio.FONT)
+        display.draw_text("ram_disp", 50, 170, ram_display, text_color, terminalio.FONT)
         display.draw_text("uptime_text", 70, 210, uptime_text, text_color, terminalio.FONT)
 
         time.sleep(1)
 
         display.remove_text("freq_text0")
         display.remove_text("temp_text0")
-        display.remove_text("freq_text1")
-        display.remove_text("temp_text1")
+        display.remove_text("ram_disp")
         display.remove_text("uptime_text")
 
         reboot_time += 1
